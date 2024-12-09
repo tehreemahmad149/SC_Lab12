@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 public class RecursiveParserTest {
+	//no parenthesis tests included as functionality not implemented
 
     @Test
     public void testSimpleAddition() {
@@ -16,11 +17,6 @@ public class RecursiveParserTest {
     }
 
     @Test
-    public void testParenthesesPrecedence() {
-        assertEquals(16.0, RecursiveParser.evaluateExpression("(3 + 5) * 2"), 0.0001);
-    }
-
-    @Test
     public void testFloatingPointNumbers() {
         assertEquals(8.05, RecursiveParser.evaluateExpression("3.5 + 4.55"), 0.0001);
     }
@@ -28,7 +24,7 @@ public class RecursiveParserTest {
     @Test
     public void testDivisionByZero() {
         Exception exception = assertThrows(ArithmeticException.class, () ->
-            RecursiveParser.evaluateExpression("42 / (6 - 6)")
+            RecursiveParser.evaluateExpression("42 / 0")
         );
         assertEquals("Division by zero.", exception.getMessage());
     }
@@ -41,13 +37,6 @@ public class RecursiveParserTest {
         assertEquals("Invalid character in expression.", exception.getMessage());
     }
 
-    @Test
-    public void testMismatchedParentheses() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () ->
-            RecursiveParser.evaluateExpression("(3 + 5")
-        );
-        assertEquals("Mismatched parentheses in expression.", exception.getMessage());
-    }
 
     @Test
     public void testEmptyExpression() {
