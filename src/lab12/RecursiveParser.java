@@ -14,8 +14,10 @@ public class RecursiveParser {
         if (expression == null || expression.isEmpty()) {
             throw new IllegalArgumentException("Expression cannot be null or empty.");
         }
+        //precondition
         return parseExpression(expression.replaceAll("\\s+", ""), 0).result;
     }
+    //helper class to store result
 
     private static class ParseResult {
         double result;
@@ -26,6 +28,8 @@ public class RecursiveParser {
             this.nextIndex = nextIndex;
         }
     }
+  //lab11 code inspired
+    //separated product, sum, number
 
     /**
      * Parses and evaluates an expression with addition and subtraction.
@@ -34,6 +38,7 @@ public class RecursiveParser {
      * @param index The current index to parse from.
      * @return The result of the parsed expression and the next index.
      */
+    
     private static ParseResult parseExpression(String expression, int index) {
         ParseResult current = parseTerm(expression, index);
 
@@ -59,6 +64,7 @@ public class RecursiveParser {
      * @param index The current index to parse from.
      * @return The result of the parsed term and the next index.
      */
+    //lab11 code inspired
     private static ParseResult parseTerm(String expression, int index) {
         ParseResult current = parseNumber(expression, index);
 
@@ -91,6 +97,7 @@ public class RecursiveParser {
      * @param index The current index to parse from.
      * @return The result of the parsed number and the next index.
      */
+    
     private static ParseResult parseNumber(String expression, int index) {
         StringBuilder number = new StringBuilder();
         while (index < expression.length() &&
@@ -103,23 +110,5 @@ public class RecursiveParser {
         }
 
         return new ParseResult(Double.parseDouble(number.toString()), index);
-    }
-
-    public static void main(String[] args) {
-        String[] testExpressions = {
-            "3 + 5 * 2",
-            "10 / 2 + 3 * 4 - 6",
-            "3.5 + 2.1 * 2 - 0.5",
-            "42 / 6 * 2",
-            "5 + 2 * 3 - 7 / 2"
-        };
-
-        for (String expression : testExpressions) {
-            try {
-                System.out.println("Expression: " + expression + " = " + evaluateExpression(expression));
-            } catch (Exception e) {
-                System.out.println("Expression: " + expression + " Error: " + e.getMessage());
-            }
-        }
     }
 }
